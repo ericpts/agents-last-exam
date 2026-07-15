@@ -526,7 +526,7 @@ def _convert_response_to_output(response: Any) -> Dict[str, Any]:
 # Unified agent loop
 # ---------------------------------------------------------------------------
 
-@register_agent(models=r"openrouter/.*", priority=10)
+@register_agent(models=r"(openrouter/.*|openai/(?:responses/)?gpt-5\.5|openai/gemini-.*|gemini/.*)", priority=10)
 class UnifiedAgentConfig(AsyncAgentConfig):
     """Unified agent loop for OpenRouter — all providers via acompletion().
 

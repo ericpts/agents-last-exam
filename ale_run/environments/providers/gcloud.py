@@ -536,10 +536,9 @@ async def _try_create_in_zone(
 
 def _extract_external_ip(inst: dict) -> str | None:
     for iface in inst.get("networkInterfaces", []):
-        for ac in iface.get("accessConfigs", []):
-            ip = ac.get("natIP")
-            if ip:
-                return ip
+        ip = iface.get("networkIP")
+        if ip:
+            return ip
     return None
 
 
