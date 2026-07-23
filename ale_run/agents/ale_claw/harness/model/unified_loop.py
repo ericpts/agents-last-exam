@@ -17,6 +17,7 @@ home. Registered via the side-effect import at the bottom of
 
 import base64
 import json
+import os
 from io import BytesIO
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -583,6 +584,11 @@ class UnifiedAgentConfig(AsyncAgentConfig):
         for k, v in kwargs.items():
             if not k.startswith("_") and v is not None:
                 api_kwargs[k] = v
+
+        if "timeout" not in api_kwargs or api_kwargs["timeout"] is None:
+            api_kwargs["timeout"] = float(os.environ.get("LITELLM_REQUEST_TIMEOUT", "18000.0"))
+        if "num_retries" not in api_kwargs or api_kwargs["num_retries"] is None:
+            api_kwargs["num_retries"] = int(os.environ.get("LITELLM_MAX_RETRIES", "100"))
 
         # Call API start hook
         if _on_api_start:

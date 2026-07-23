@@ -12,9 +12,16 @@ Design reference:
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass
 from typing import List, Literal, Tuple
+
+import litellm
+
+# Set LiteLLM global request timeout and max retries from environment variables
+litellm.request_timeout = float(os.environ.get("LITELLM_REQUEST_TIMEOUT", "18000.0"))
+litellm.num_retries = int(os.environ.get("LITELLM_MAX_RETRIES", "100"))
 
 
 @dataclass(frozen=True)
